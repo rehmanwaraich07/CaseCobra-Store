@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
-    "@kinde-oss/kinde-auth-nextjs": "^2.2.4",
+    "@kinde-oss/kinde-auth-nextjs": "^2.4.6",
     "@prisma/client": "^6.0.1",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.5",
