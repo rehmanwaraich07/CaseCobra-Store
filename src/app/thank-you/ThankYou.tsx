@@ -16,6 +16,7 @@ const ThankYou = () => {
     queryFn: async () => await getPaymentStatus({ orderId }),
     retry: true,
     retryDelay: 1000,
+    enabled: !!orderId,
   });
 
   console.log(orderId);
