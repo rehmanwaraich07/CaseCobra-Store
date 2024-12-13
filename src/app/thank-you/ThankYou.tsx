@@ -2,47 +2,25 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getPaymentStatus } from "./actions";
-import { useSearchParams, useRouter } from "next/navigation";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 import PhonePreview from "@/components/PhonePreview";
 import { formatPrice } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const ThankYou = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const orderId = searchParams.get("orderId");
+  const orderId = searchParams.get("orderId") || "";
 
-  const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["get-payment-status", orderId],
-    queryFn: async () => {
-      if (!orderId) throw new Error("No order ID provided");
-      return await getPaymentStatus({ orderId });
-    },
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000), // Exponential backoff with max 10s
-    enabled: !!orderId,
+  const { data } = useQuery({
+    queryKey: ["get-payment-status"],
+    queryFn: async () => await getPaymentStatus({ orderId }),
+    retry: true,
+    retryDelay: 1000,
   });
 
-  if (isError) {
-    return (
-      <div className="w-full mt-24 flex flex-col items-center gap-4 px-4">
-        <Alert variant="destructive" className="max-w-md">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            {error instanceof Error
-              ? error.message
-              : "Failed to load your order. Please contact support if this persists."}
-          </AlertDescription>
-        </Alert>
-        <Button onClick={() => router.push("/")}>Return to Home</Button>
-      </div>
-    );
-  }
+  console.log(orderId);
 
-  if (isLoading || data === undefined) {
+  if (data === undefined) {
     return (
       <div className="w-full mt-24 flex justify-center">
         <div className="flex flex-col items-center gap-2">
