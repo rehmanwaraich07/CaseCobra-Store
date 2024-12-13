@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Providers from "@/components/Providers";
 import { constructMetadata } from "@/lib/utils";
 import { AuthProvider } from "@/lib/AuthProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const recursive = Recursive({ subsets: ["latin"] });
 
@@ -17,7 +18,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
+    //@ts-ignore
+    <ClerkProvider>
       <html lang="en">
         <body className={recursive.className}>
           <Navbar />
@@ -32,6 +34,6 @@ export default async function RootLayout({
           <Toaster />
         </body>
       </html>
-    </AuthProvider>
+    </ClerkProvider>
   );
 }

@@ -2,18 +2,14 @@ import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { buttonVariants } from "./ui/button";
 import { ArrowRight } from "lucide-react";
-import {
-  getKindeServerSession,
-  LoginLink,
-  LogoutLink,
-  RegisterLink,
-} from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
+import { SignOutButton } from "@clerk/nextjs";
 
 const Navbar = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.emailAddresses[0].emailAddress === process.env.ADMIN_EMAIL;
 
   return (
     <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
@@ -26,14 +22,9 @@ const Navbar = async () => {
           <div className="h-full flex items-center space-x-4">
             {user ? (
               <>
-                <LogoutLink
-                  className={buttonVariants({
-                    size: "sm",
-                    variant: "ghost",
-                  })}
-                >
-                  Sign out
-                </LogoutLink>
+                <div className="text-[13px]">
+                  <SignOutButton redirectUrl="/" />
+                </div>
                 {isAdmin ? (
                   <Link
                     href="/dashboard"
@@ -58,23 +49,25 @@ const Navbar = async () => {
               </>
             ) : (
               <>
-                <RegisterLink
+                <Link
+                  href={"/api/auth/sign-up"}
                   className={buttonVariants({
                     size: "sm",
                     variant: "ghost",
                   })}
                 >
                   Sign up
-                </RegisterLink>
+                </Link>
 
-                <LoginLink
+                <Link
+                  href={"/api/auth/sign-in"}
                   className={buttonVariants({
                     size: "sm",
                     variant: "ghost",
                   })}
                 >
                   Login
-                </LoginLink>
+                </Link>
 
                 <div className="h-8 w-px bg-zinc-200 hidden sm:block" />
 
