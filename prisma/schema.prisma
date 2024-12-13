@@ -55,6 +55,7 @@ model Configuration {
 model User {
   id    String  @id @default(cuid())
   email String
+  name  String?
   Order Order[]
 
   createdAt DateTime @default(now())
