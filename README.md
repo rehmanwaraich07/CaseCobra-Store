@@ -16,4 +16,5 @@ Built with the Next.js 14 App Router, Postgres, TypeScript, Tailwind & Clerk Aut
 - ✉️ Beautiful thank-you email after purchase
 - ✅ Apple-inspired configuration design
 - ⌨️ 100% written in TypeScript
+- Best E-Commerce Store
   
