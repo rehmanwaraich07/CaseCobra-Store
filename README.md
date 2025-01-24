@@ -19,3 +19,5 @@ Built with the Next.js 14 App Router, Postgres, TypeScript, Tailwind & Clerk Aut
 - Best E-Commerce Store
 
 ### Working on it (not Completed)
+
+### We will soon complete it.
